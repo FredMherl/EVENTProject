@@ -40,6 +40,8 @@ public class view extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -68,6 +70,7 @@ public class view extends javax.swing.JFrame {
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 540, 140, 40));
 
         jLabel3.setFont(new java.awt.Font("Rockwell", 1, 48)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 0));
         jLabel3.setText("EVENT MANAGEMENT SYSTEM");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 15, 780, 40));
 
@@ -87,7 +90,20 @@ public class view extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 540, 140, 40));
+        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 540, 140, 40));
+
+        jButton5.setFont(new java.awt.Font("Rockwell", 0, 14)); // NOI18N
+        jButton5.setText("< BACK");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 610, 120, 30));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/eventmanager/Gifs/AnimationTechGIFbyButlerm-ezgif.com-resize.gif"))); // NOI18N
+        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 153)));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1053, 647));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1053, 647));
 
@@ -95,7 +111,7 @@ public class view extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+
         // Clear existing rows in JTable before displaying new data
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);  // This removes all existing rows in the JTable
@@ -109,14 +125,13 @@ public class view extends javax.swing.JFrame {
             ResultSet rs = pst.executeQuery();
 
             while (rs.next()) {
-                
-                Object[] row = new Object[5];
-                row[0] = rs.getInt("code");  // student_id
-                row[1] = rs.getString("tblevent");     // name
-                row[2] = rs.getString("tblvenue");         // age
-                row[3] = rs.getString("tblwhen");    // gender
-                row[4] = rs.getString("tblwhere");    // gender
 
+                Object[] row = new Object[5];
+                row[0] = rs.getInt("code");
+                row[1] = rs.getString("tblevent");
+                row[2] = rs.getString("tblvenue");
+                row[3] = rs.getString("tblwhen");
+                row[4] = rs.getString("tblwhere");
 
                 model.addRow(row);  // Add the new row to the JTable
             }
@@ -128,14 +143,14 @@ public class view extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        
+
         int selectedRow = jTable1.getSelectedRow();
 
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(null, "Please select a row to delete.");
             return;
         }
-        
+
         int code = Integer.parseInt(jTable1.getValueAt(selectedRow, 0).toString());
 
         int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this record?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
@@ -162,15 +177,39 @@ public class view extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
             }
         }
-        
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        
-        main jf = new main();
-            jf.show();
-            dispose();
+
+        int row = jTable1.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a row to update.");
+            return;
+        }
+
+// Get data from table
+        int id = Integer.parseInt(jTable1.getValueAt(row, 0).toString());
+        String event = jTable1.getValueAt(row, 1).toString();
+        String venue = jTable1.getValueAt(row, 2).toString();
+        String when = jTable1.getValueAt(row, 3).toString();
+        String where = jTable1.getValueAt(row, 4).toString();
+
+// Pass data to the second JFrame
+        main updateFrame = new main(id, event, venue, when, where);
+        updateFrame.setVisible(true);
+
+        /*main jf = new main();
+        jf.show();
+        dispose();*/
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+
+        main jf = new main();
+        jf.show();
+        dispose();
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -211,6 +250,8 @@ public class view extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

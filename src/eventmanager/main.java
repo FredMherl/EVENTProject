@@ -17,11 +17,19 @@ import javax.swing.JOptionPane;
  */
 public class main extends javax.swing.JFrame {
 
-    /**
-     * Creates new form main
-     */
+    private int selectedId;
+
     public main() {
         initComponents();
+    }
+
+    public main(int id, String event, String venue, String when, String where) {
+        initComponents();
+        selectedId = id;
+        mainevent.setText(event);
+        mainvenue.setText(venue);
+        mainwhen.setText(when);
+        mainwhere.setText(where);
     }
 
     /**
@@ -45,6 +53,10 @@ public class main extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        btnSearch = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         jButton1.setFont(new java.awt.Font("Rockwell", 0, 14)); // NOI18N
         jButton1.setText("ENTER");
@@ -55,6 +67,7 @@ public class main extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Rockwell", 1, 48)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 0));
         jLabel3.setText("EVENT MANAGEMENT SYSTEM");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 780, 40));
 
@@ -66,6 +79,7 @@ public class main extends javax.swing.JFrame {
         jPanel1.add(mainwhen, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 310, 550, 40));
 
         jLabel2.setFont(new java.awt.Font("Rockwell", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 0));
         jLabel2.setText("VENUE");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(493, 260, -1, 20));
 
@@ -91,14 +105,17 @@ public class main extends javax.swing.JFrame {
         jPanel1.add(mainvenue, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, 550, 40));
 
         jLabel4.setFont(new java.awt.Font("Rockwell", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 0));
         jLabel4.setText("WHEN");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(496, 350, -1, 20));
 
         jLabel5.setFont(new java.awt.Font("Rockwell", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 0));
         jLabel5.setText("WHERE");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 440, -1, 20));
 
         jLabel6.setFont(new java.awt.Font("Rockwell", 1, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 0));
         jLabel6.setText("EVENT");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(493, 170, -1, 20));
 
@@ -109,7 +126,38 @@ public class main extends javax.swing.JFrame {
                 jButton5ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 510, 140, 40));
+        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 510, 140, 40));
+
+        btnUpdate.setFont(new java.awt.Font("Rockwell", 0, 14)); // NOI18N
+        btnUpdate.setText("UPDATE");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 510, 140, 40));
+
+        jButton6.setFont(new java.awt.Font("Rockwell", 0, 14)); // NOI18N
+        jButton6.setText("GO TO VIEW >");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 610, 140, 30));
+
+        btnSearch.setFont(new java.awt.Font("Rockwell", 0, 14)); // NOI18N
+        btnSearch.setText("SEARCH");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 510, 140, 40));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/eventmanager/Gifs/AnimationTechGIFbyButlerm-ezgif.com-resize.gif"))); // NOI18N
+        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 153)));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1053, 647));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1053, 647));
 
@@ -166,11 +214,6 @@ public class main extends javax.swing.JFrame {
 
                 ResultSet rs = pst.getGeneratedKeys();
 
-                //DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-                //model.addRow(new Object[]{ name, age, gender, address, contact, college, program});
-                // 5. Success message
-                JOptionPane.showMessageDialog(null, "Data Saved Successfully!");
-
                 con.close();
 
             } catch (Exception e) {
@@ -187,6 +230,83 @@ public class main extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+
+        String event = mainevent.getText();
+        String venue = mainvenue.getText();
+        String when = mainwhen.getText();
+        String where = mainwhere.getText();
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/eventdb?useSSL=false", "root", "");
+
+            String sql = "UPDATE ems SET tblevent=?, tblvenue=?, tblwhen=?, tblwhere=? WHERE code=?";
+            PreparedStatement pst = con.prepareStatement(sql);
+
+            pst.setString(1, event);
+            pst.setString(2, venue);
+            pst.setString(3, when);
+            pst.setString(4, where);
+            pst.setInt(5, selectedId);  // <-- uses the ID passed from the first JFrame
+
+            int rowsUpdated = pst.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(null, "Event updated successfully!");
+                dispose(); // Close the update window
+            } else {
+                JOptionPane.showMessageDialog(null, "Update failed. No rows affected.");
+            }
+
+            con.close();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        }
+
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        view jf = new view();
+        jf.show();
+        dispose();
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+
+        String eventName = mainevent.getText().trim();
+
+        if (eventName.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please enter an event name to search.");
+            return;
+        }
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/eventdb?useSSL=false", "root", "");
+
+            String sql = "SELECT code FROM ems WHERE tblevent = ?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, eventName);
+
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                int id = rs.getInt("code");
+                JOptionPane.showMessageDialog(null, "Event found at event code: " + id);
+            } else {
+                JOptionPane.showMessageDialog(null, "Event not existed.");
+            }
+
+            con.close();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        }
+
+    }//GEN-LAST:event_btnSearchActionPerformed
 
     /**
      * @param args the command line arguments
@@ -224,8 +344,12 @@ public class main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSearch;
+    private javax.swing.JButton btnUpdate;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
