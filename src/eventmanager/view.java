@@ -199,9 +199,7 @@ public class view extends javax.swing.JFrame {
         main updateFrame = new main(id, event, venue, when, where);
         updateFrame.setVisible(true);
 
-        /*main jf = new main();
-        jf.show();
-        dispose();*/
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
